@@ -2,22 +2,22 @@
 	import Calendar from '@event-calendar/core';
 	import TimeGrid from '@event-calendar/time-grid';
 	import Interation from '@event-calendar/interaction';
+	import '@event-calendar/core/index.css';
+	import { v4 as uuidv4 } from 'uuid';
 
 	let plugins = [TimeGrid, Interation];
 	let options = {
 		view: 'timeGridWeek',
-		slotMinTime: '06:00:00',
 		allDaySlot: false,
-		events: [
-			{
-				id: 'hi',
-				start: new Date(Date.now()),
-				end: new Date(Date.now() + 10000000),
-				title: 'example'
-			}
-		],
-		eventDragStart: (info) => console.log('HII', info)
+		events: [],
+		selectable: true,
+		select: (info) => addEvent(info)
 	};
+
+	function addEvent(info) {
+		// Assignment is what triggers a refresh to the DOM
+		options.events = [...options.events, { id: uuidv4(), ...info }];
+	}
 </script>
 
 <Calendar {plugins} {options} />
