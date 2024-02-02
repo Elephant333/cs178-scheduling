@@ -1,8 +1,10 @@
-# create-svelte
+# Scheduling app
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Scheudling app, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
 ## Developing
+
+Check in `src/routes/schedule/+page.svelte` for the base Calendar page.
 
 Once you've created a project and installed dependencies with `npm install`, start a development server:
 
