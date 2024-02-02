@@ -4,7 +4,7 @@ Scheudling app, powered by [`create-svelte`](https://github.com/sveltejs/kit/tre
 
 ## Developing
 
-Check in `src/routes/schedule/+page.svelte` for the base Calendar page.
+Check in `src/routes/+page.svelte` for the base Calendar page.
 
 Once you've created a project and installed dependencies with `npm install`, start a development server:
 
