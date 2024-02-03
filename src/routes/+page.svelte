@@ -11,12 +11,17 @@
 		allDaySlot: false,
 		events: [],
 		selectable: true,
-		select: (info) => addEvent(info)
+		select: (info) => addEvent(info),
+		eventClick: (info) => removeEventById(info.event.id),
 	};
 
 	function addEvent(info) {
 		// Assignment is what triggers a refresh to the DOM
 		options.events = [...options.events, { id: uuidv4(), ...info }];
+	}
+
+	function removeEventById(id) {
+		options.events = options.events.filter(event => event.id !== id);
 	}
 </script>
 
