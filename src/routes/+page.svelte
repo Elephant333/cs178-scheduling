@@ -13,6 +13,7 @@
 		selectable: true,
 		slotMinTime: '10:00:00',
 		slotMaxTime: '23:00:00',
+		headerToolbar: {start: '', center: '', end: ''},
 		select: (info) => addEvent(info),
 		eventClick: (info) => removeEventById(info.event.id),
 	};
