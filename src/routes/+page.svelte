@@ -41,9 +41,13 @@
 
 	function addEvent(info) {
 		// Assignment is what triggers a refresh to the DOM
+		let color = 'grey'
+		if (preferred_slots || last_resort_slots) {
+			color = last_resort_slots ? '#e6e600' : 'green';
+		}
 		options.events = [
 			...options.events,
-			{ id: uuidv4(), selectBackgroundColor: 'grey', backgroundColor: 'grey', ...info }
+			{ id: uuidv4(), backgroundColor: color, ...info }
 		];
 	}
 
@@ -52,11 +56,19 @@
 			preferred_slots = !preferred_slots;
 			if (preferred_slots) {
 				last_resort_slots = false;
+				options.selectBackgroundColor = 'green';
+			}
+			else {
+				options.selectBackgroundColor = 'grey';
 			}
 		} else {
 			last_resort_slots = !last_resort_slots;
 			if (last_resort_slots) {
 				preferred_slots = false;
+				options.selectBackgroundColor = '#e6e600';
+			}
+			else {
+				options.selectBackgroundColor = 'grey';
 			}
 		}
 	}
