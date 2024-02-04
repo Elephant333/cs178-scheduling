@@ -15,6 +15,7 @@
 		slotMinTime: '10:00:00',
 		slotMaxTime: '23:00:00',
 		headerToolbar: { start: '', center: '', end: '' },
+		selectBackgroundColor: 'grey',
 		select: (info) => addEvent(info),
 		eventClick: (info) => handleEventClick(info.event.id)
 	};
