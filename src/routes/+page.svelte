@@ -76,6 +76,23 @@
 	function removeEventById(id) {
 		options.events = options.events.filter((event) => event.id !== id);
 	}
+
+	function handleCopy() {
+		let event = JSON.parse(JSON.stringify(options.events[0]));
+		let start = new Date(event.start);
+		let end = new Date(event.end);
+
+		start = new Date(start.setDate(start.getDate() + 1))
+		end = new Date(end.setDate(end.getDate() + 1));
+
+		event.start = start;
+		event.end = end;
+		event.id = uuidv4();
+
+		options.events = [
+			...options.events, event
+		];
+	}
 </script>
 
 <div class="local">
@@ -93,6 +110,13 @@
 	>
 </div>
 <Calendar {plugins} {options} />
+
+<Button
+	class={''}
+	variant="unelevated"
+	color="secondary"
+	on:click={() => handleCopy()}>Copy</Button
+>
 
 <svelte:head>
 	<title>Schedule</title>
