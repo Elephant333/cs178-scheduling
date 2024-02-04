@@ -17,11 +17,24 @@
 		headerToolbar: { start: '', center: '', end: '' },
 		selectBackgroundColor: 'grey',
 		select: (info) => addEvent(info),
-		eventClick: (info) => handleEventClick(info.event.id)
+		eventClick: (info) => handleEventClick(info.event.id),
+		eventDrop: (info) => handleEventDrop(info),
 	};
 	let preferred_slots = false;
 	let last_resort_slots = false;
-
+	
+	function addEvent(info) {
+		// Assignment is what triggers a refresh to the DOM
+		let color = 'grey'
+		if (preferred_slots || last_resort_slots) {
+			color = last_resort_slots ? '#e6e600' : 'green';
+		}
+		options.events = [
+			...options.events,
+			{ id: uuidv4(), backgroundColor: color, ...info }
+		];
+	}
+	
 	function handleEventClick(id) {
 		if (!preferred_slots && !last_resort_slots) {
 			removeEventById(id);
@@ -38,19 +51,26 @@
 			});
 		}
 	}
+	
+	function handleEventDrop(info) {
+		let event = JSON.parse(JSON.stringify(info.event));
+		let start = new Date(event.start);
+		let end = new Date(event.end);
 
-	function addEvent(info) {
-		// Assignment is what triggers a refresh to the DOM
-		let color = 'grey'
-		if (preferred_slots || last_resort_slots) {
-			color = last_resort_slots ? '#e6e600' : 'green';
-		}
+		start = new Date(start.setDate(start.getDate()))
+		end = new Date(end.setDate(end.getDate()));
+
+		event.start = start;
+		event.end = end;
+		event.id = uuidv4();
+
+		let id = info.event.id;
 		options.events = [
-			...options.events,
-			{ id: uuidv4(), backgroundColor: color, ...info }
+			...options.events, event
 		];
+		removeEventById(id);
 	}
-
+	
 	function handleButtonClick(isPreferred) {
 		if (isPreferred) {
 			preferred_slots = !preferred_slots;
