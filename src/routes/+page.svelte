@@ -18,17 +18,19 @@
 		select: (info) => addEvent(info),
 		eventClick: (info) => handleEventClick(info.event.id)
 	};
-	let preferred = false;
+	let preferred_slots = false;
+	let last_resort_slots = false;
 
 	function handleEventClick(id) {
-		if (!preferred) {
+		if (!preferred_slots && !last_resort_slots) {
 			removeEventById(id);
 		} else {
 			options.events = options.events.map((event) => {
 				if (event.id === id) {
+					let color = last_resort_slots ? '#e6e600' : 'green';
 					return {
 						...event,
-						backgroundColor: event.backgroundColor === 'green' ? 'grey' : 'green'
+						backgroundColor: event.backgroundColor === color ? 'grey' : color
 					};
 				}
 				return event;
@@ -44,16 +46,37 @@
 		];
 	}
 
+	function handleButtonClick(isPreferred) {
+		if (isPreferred) {
+			preferred_slots = !preferred_slots;
+			if (preferred_slots) {
+				last_resort_slots = false;
+			}
+		} else {
+			last_resort_slots = !last_resort_slots;
+			if (last_resort_slots) {
+				preferred_slots = false;
+			}
+		}
+	}
+
 	function removeEventById(id) {
 		options.events = options.events.filter((event) => event.id !== id);
 	}
 </script>
 
-<div>
+<div class="local">
 	<Button
+		class={preferred_slots ? 'button-green' : ''}
 		variant="unelevated"
-		color={preferred ? 'primary' : 'secondary'}
-		on:click={() => (preferred = !preferred)}>Select Preferred Slots</Button
+		color="secondary"
+		on:click={() => handleButtonClick(true)}>Select Preferred Slots</Button
+	>
+	<Button
+		class={last_resort_slots ? 'button-yellow' : ''}
+		variant="unelevated"
+		color="secondary"
+		on:click={() => handleButtonClick(false)}>Select Last Resort Slots</Button
 	>
 </div>
 <Calendar {plugins} {options} />
@@ -64,8 +87,17 @@
 </svelte:head>
 
 <style>
-	div {
+	.local {
 		display: flex;
-		justify-content: center;
+		justify-content: space-evenly;
+	}
+
+	.local :global(.button-green) {
+		background-color: green !important;
+	}
+
+	.local :global(.button-yellow) {
+		color: black;
+		background-color: #e6e600 !important;
 	}
 </style>
