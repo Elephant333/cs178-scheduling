@@ -24,7 +24,7 @@
 	let last_resort_slots = false;
 	let copied = [];
 	let copiedDay = 0;
-	let copying = false;
+	let copyButtons = Array(7).fill(true); // false means copy, true means paste
 	
 	function addEvent(info) {
 		// Assignment is what triggers a refresh to the DOM
@@ -103,7 +103,8 @@
 	function handleCopy(day) {
 		copied = JSON.parse(JSON.stringify(options.events));
 		copiedDay = day;
-		copying = !copying;
+		copyButtons = Array(7).fill(false);
+		copyButtons[day] = true;
 	}
 
 	function handlePaste(day) {
@@ -123,6 +124,8 @@
 				...options.events, event
 			];
 		}
+		copyButtons = Array(7).fill(true);
+		copied = [];
 	}
 </script>
 
@@ -144,54 +147,15 @@
 
 
 <div class="footer">
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handleCopy(0)}>Copy</Button
-	>
-
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handlePaste(1)}>Paste</Button
-	>
-
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handlePaste(2)}>Paste</Button
-	>
-
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handlePaste(3)}>Paste</Button
-	>
-
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handlePaste(4)}>Paste</Button
-	>
-
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handlePaste(5)}>Paste</Button
-	>
-
-	<Button
-		class={''}
-		variant="unelevated"
-		color="secondary"
-		on:click={() => handlePaste(6)}>Paste</Button
-	>
+	{#each Array(7) as _, day}
+		<Button
+			class={''}
+			variant="unelevated"
+			color="secondary"
+			on:click={() => copyButtons[day] ? handleCopy(day) : handlePaste(day)}>
+			{copyButtons[day] ? 'Copy' : 'Paste'}
+		</Button>
+	{/each}
 </div>
 
 <svelte:head>
