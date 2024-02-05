@@ -101,7 +101,11 @@
 	}
 
 	function handleCopy(day) {
-		// copied = JSON.parse(JSON.stringify(options.events));
+		if (copyButtons[day] == true && copyButtons.includes(false)) {
+			copyButtons = Array(7).fill(true);
+			copied = [];
+			return
+		}
 		// only copy events from the specific day
 		copied = options.events.filter(event => {
         const eventDate = new Date(event.start);
