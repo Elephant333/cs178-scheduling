@@ -22,6 +22,7 @@
 	};
 	let preferred_slots = false;
 	let last_resort_slots = false;
+	let copied = [];
 	
 	function addEvent(info) {
 		// Assignment is what triggers a refresh to the DOM
@@ -98,20 +99,26 @@
 	}
 
 	function handleCopy() {
-		let event = JSON.parse(JSON.stringify(options.events[0]));
-		let start = new Date(event.start);
-		let end = new Date(event.end);
+		copied = JSON.parse(JSON.stringify(options.events));
+	}
 
-		start = new Date(start.setDate(start.getDate() + 1))
-		end = new Date(end.setDate(end.getDate() + 1));
-
-		event.start = start;
-		event.end = end;
-		event.id = uuidv4();
-
-		options.events = [
-			...options.events, event
-		];
+	function handlePaste() {
+		for (let i = 0; i < copied.length; i++) {
+			let event = JSON.parse(JSON.stringify(copied[i]));
+			let start = new Date(event.start);
+			let end = new Date(event.end);
+	
+			start = new Date(start.setDate(start.getDate() + 1))
+			end = new Date(end.setDate(end.getDate() + 1));
+	
+			event.start = start;
+			event.end = end;
+			event.id = uuidv4();
+	
+			options.events = [
+				...options.events, event
+			];
+		}
 	}
 </script>
 
@@ -131,12 +138,52 @@
 </div>
 <Calendar {plugins} {options} />
 
-<Button
-	class={''}
-	variant="unelevated"
-	color="secondary"
-	on:click={() => handleCopy()}>Copy</Button
->
+
+<div class="footer">
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary"
+		on:click={() => handleCopy()}>Copy</Button
+	>
+
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary"
+		on:click={() => handlePaste()}>Paste</Button
+	>
+
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary">Foo</Button
+	>
+
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary">Foo</Button
+	>
+
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary">Foo</Button
+	>
+
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary">Foo</Button
+	>
+
+	<Button
+		class={''}
+		variant="unelevated"
+		color="secondary">Foo</Button
+	>
+</div>
 
 <svelte:head>
 	<title>Schedule</title>
@@ -147,6 +194,13 @@
 	.local {
 		display: flex;
 		justify-content: space-evenly;
+	}
+
+	.footer {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+    grid-gap: 10px;
+		margin-left: 85px;
 	}
 
 	.local :global(.button-green) {
