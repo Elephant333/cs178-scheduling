@@ -153,8 +153,8 @@
 		on:click={() => handleButtonClick(false)}>Select Last Resort Slots</Button
 	>
 </div>
-<Calendar {plugins} {options} />
 
+<Calendar {plugins} {options} />
 
 <div class="footer">
 	{#each Array(7) as _, day}
