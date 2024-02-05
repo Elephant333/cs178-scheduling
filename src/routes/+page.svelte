@@ -102,14 +102,14 @@
 		copied = JSON.parse(JSON.stringify(options.events));
 	}
 
-	function handlePaste() {
+	function handlePaste(day) {
 		for (let i = 0; i < copied.length; i++) {
 			let event = JSON.parse(JSON.stringify(copied[i]));
 			let start = new Date(event.start);
 			let end = new Date(event.end);
 	
-			start = new Date(start.setDate(start.getDate() + 1))
-			end = new Date(end.setDate(end.getDate() + 1));
+			start = new Date(start.setDate(start.getDate() + day))
+			end = new Date(end.setDate(end.getDate() + day));
 	
 			event.start = start;
 			event.end = end;
@@ -151,37 +151,42 @@
 		class={''}
 		variant="unelevated"
 		color="secondary"
-		on:click={() => handlePaste()}>Paste</Button
+		on:click={() => handlePaste(1)}>Paste</Button
 	>
 
 	<Button
 		class={''}
 		variant="unelevated"
-		color="secondary">Foo</Button
+		color="secondary"
+		on:click={() => handlePaste(2)}>Paste</Button
 	>
 
 	<Button
 		class={''}
 		variant="unelevated"
-		color="secondary">Foo</Button
+		color="secondary"
+		on:click={() => handlePaste(3)}>Paste</Button
 	>
 
 	<Button
 		class={''}
 		variant="unelevated"
-		color="secondary">Foo</Button
+		color="secondary"
+		on:click={() => handlePaste(4)}>Paste</Button
 	>
 
 	<Button
 		class={''}
 		variant="unelevated"
-		color="secondary">Foo</Button
+		color="secondary"
+		on:click={() => handlePaste(5)}>Paste</Button
 	>
 
 	<Button
 		class={''}
 		variant="unelevated"
-		color="secondary">Foo</Button
+		color="secondary"
+		on:click={() => handlePaste(6)}>Paste</Button
 	>
 </div>
 
