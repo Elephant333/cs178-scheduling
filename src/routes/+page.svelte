@@ -155,7 +155,7 @@
 	{#each Array(7) as _, day}
 		<Button
 			class={''}
-			variant="unelevated"
+			variant={copyButtons[day] ? 'outlined' : 'unelevated'}
 			color="secondary"
 			on:click={() => copyButtons[day] ? handleCopy(day) : handlePaste(day)}>
 			{copyButtons[day] ? 'Copy' : 'Paste'}
