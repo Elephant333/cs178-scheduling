@@ -18,7 +18,8 @@
 		selectBackgroundColor: 'grey',
 		select: (info) => addEvent(info),
 		eventClick: (info) => handleEventClick(info.event.id),
-		eventDrop: (info) => handleEventDrop(info),
+		eventDrop: (info) => handleEventUpdate(info),
+		eventResize: (info) => handleEventUpdate(info),
 	};
 	let preferred_slots = false;
 	let last_resort_slots = false;
@@ -55,12 +56,12 @@
 		}
 	}
 	
-	function handleEventDrop(info) {
+	function handleEventUpdate(info) {
 		let event = JSON.parse(JSON.stringify(info.event));
 		let start = new Date(event.start);
 		let end = new Date(event.end);
 
-		start = new Date(start.setDate(start.getDate()))
+		start = new Date(start.setDate(start.getDate()));
 		end = new Date(end.setDate(end.getDate()));
 
 		event.start = start;
